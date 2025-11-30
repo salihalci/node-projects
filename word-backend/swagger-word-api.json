@@ -1,0 +1,182 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "Dictinary API",
+    "description": "Dictionary Application API",
+    "license": {
+      "name": "MIT",
+      "url": "https://opensource.org/licenses/MIT"
+    }
+  },
+  "host": "localhost:8100",
+  "basePath": "/dictionary/api/v1",
+  "tags": [
+    {
+      "name": "Words",
+      "description": "API for dictionry"
+    }
+  ],
+  "schemes": [
+    "http"
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/words": {
+      "post": {
+        "tags": [
+          "Words"
+        ],
+        "description": "Create new word in dictionary",
+        "parameters": [
+          {
+            "name": "word",
+            "in": "body",
+            "description": "Word that we want to create",
+            "schema": {
+              "$ref": "#/definitions/Word"
+            }
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "New word is created",
+            "schema": {
+              "$ref": "#/definitions/Word"
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "Words"
+        ],
+        "summary": "Get all words in system",
+        "parameters" : [
+          {
+            "in" : "query",
+            "name": "page",
+            "schema": "integer"
+          },{
+            "in" : "query",
+            "name": "size",
+            "schema": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/Words"
+            }
+          }
+        }
+      }
+    },
+    "/words/{id}": {
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "description": "id No of words that we want to find",
+          "type": "string"
+        }
+      ],
+      "get": {
+        "tags": [
+          "Words"
+        ],
+        "summary": "Get word with given ID",
+        "responses": {
+          "200": {
+            "description": "Word is found",
+            "schema": {
+              "$ref": "#/definitions/Word"
+            }
+          }
+        }
+      },
+      "put": {
+        "summary": "Update word",
+        "tags": [
+          "Words"
+        ],
+        "parameters": [
+          {
+            "name": "word",
+            "in": "body",
+            "description": "Word that we want to update",
+            "schema": {
+              "$ref": "#/definitions/Word"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Word is updated",
+            "schema": {
+              "$ref": "#/definitions/Word"
+            }
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete word with given id No",
+        "tags": [
+          "Words"
+        ],
+        "responses": {
+          "200": {
+            "description": "Word is deleted",
+            "schema": {
+              "$ref": "#/definitions/Words"
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "Word": {
+      "required": [
+        "_id",
+        "turkish",
+        "english",
+        "pictureURL",
+        "pictureBase64"
+         
+      ],
+      "properties": {
+        "_id": {
+          "type": "string",
+          "uniqueItems": true
+        },
+        "turkish": {
+          "type": "string"
+        },
+        "english": {
+          "type": "string"
+        },
+        "pictureURL": {
+          "type": "string"
+        },
+        "pictureBase64": {
+          "type": "number"
+        }
+      }
+    },
+    "Words": {
+      "type": "array",
+      "$ref": "#/definitions/Word"
+    }
+  }
+}
